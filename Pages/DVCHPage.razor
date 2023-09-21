@@ -1,0 +1,39 @@
+﻿@page "/dvch"
+@inject HttpClient httpClient
+@using dvhc_wasm.Components
+
+<PageTitle>Đơn vị hành chính</PageTitle>
+
+<h1>Đơn vị hành chính</h1>
+
+
+@if (items == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <DataTable DataList="@items" />
+
+    @* <table class="table">
+<thead>
+<tr>
+<th>Tỉnh/Thành Phố</th>
+<th>Quận/Huyện</th>
+<th>Xã Phường</th>
+<th>Summary</th>
+</tr>
+</thead>
+<tbody>
+@foreach (var item in items)
+{
+<tr>
+<td>@item.Province</td>
+<td>@item.District</td>
+<td>@item.Area</td>
+<td></td>
+</tr>
+}
+</tbody>
+</table> *@
+}

@@ -1,0 +1,59 @@
+@page "/location-table"
+@using dvhc_wasm.Models
+@using MudBlazor
+
+<MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
+    <thead>
+        <tr>
+            @foreach (var h in Headings)
+            {
+                <th>@h</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in DataList)
+        {
+            <tr>
+
+                <td>@row.Province</td>
+                <td>@row.District</td>
+                <td>@row.Area</td>
+
+            </tr>
+        }
+    </tbody>
+</MudSimpleTable>
+
+@code {
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+
+    [Parameter]
+    public List<DVHCItem> DataList { get; set; }
+
+    public List<string> Headings = new List<string>() { "A", "B", "C" };
+    private List<DVHCItem> flattenedList = new List<DVHCItem>();
+    private List<DVHCItem> expandedLocations = new List<DVHCItem>();
+
+    private void RowExpanded(DVHCItem item)
+    {
+        expandedLocations = flattenedList
+        .Where(location => location.Province == item.Province)
+        .ToList();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        // When the DataList parameter changes, update the flattenedList
+        if (DataList != null)
+        {
+            flattenedList = DataList;
+            Console.WriteLine("test");
+        }
+    }
+}
